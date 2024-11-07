@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rastreio de Pedido</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .status {
+            margin-top: 30px;
+            font-size: 18px;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .progress {
+            height: 100%;
+            width: 0;
+            background-color: #4caf50;
+            border-radius: 5px;
+            transition: width 1s ease-in-out;
+        }
+        .status-message {
+            font-size: 16px;
+            margin-top: 10px;
+            color: #555;
+        }
+        input {
+            padding: 12px;
+            margin: 15px 0;
+            width: 100%;
+            max-width: 320px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border-color 0.3s ease;
+        }
+        input:focus {
+            border-color: #000000;
+        }
+        button {
+            padding: 12px 25px;
+            font-size: 16px;
+            background-color: #000000;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #333;
+        }
+        .error {
+            color: #f44336;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Rastreio de Pedido</h1>
+
+        <!-- Campo para o código de rastreio -->
+        <input type="text" id="codigo-rastreio" placeholder="Digite o código de rastreio">
+
+        <div id="error-message" class="error" style="display: none;"></div>
+
+        <div class="status" id="status-container" style="display:none;">
+            <h2>Status do Pedido</h2>
+            <div class="progress-bar">
+                <div class="progress" id="progress-bar"></div>
+            </div>
+            <div id="status-message" class="status-message"></div>
+        </div>
+
+        <button onclick="rastrearPedido()">Rastrear</button>
+    </div>
+
+    <script>
+        // Função para capturar o código de rastreio da URL
+        function getCodigoRastreio() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('codigo');
+        }
+
+        // Função que simula o rastreio do pedido com base no código de rastreio
+        function rastrearPedido() {
+            const codigo = document.getElementById('codigo-rastreio').value;
+            const errorMessage = document.getElementById('error-message');
+            const statusContainer = document.getElementById('status-container');
+            const progressBar = document.getElementById('progress-bar');
+            const statusMessage = document.getElementById('status-message');
+            
+            errorMessage.style.display = 'none'; // Ocultar mensagens de erro
+            statusContainer.style.display = 'none'; // Ocultar status anterior
+            
+            if (!codigo) {
+                errorMessage.style.display = 'block';
+                errorMessage.innerText = "Por favor, insira um código de rastreio.";
+                return;
+            }
+
+            // Simulação de um pedido com status
+            let status, progress, statusMessageText;
+            switch (codigo) {
+                case "123456":
+                    status = "Aguardando Pagamento";
+                    progress = 25;
+                    statusMessageText = "Seu pagamento está sendo processado.";
+                    break;
+                case "654321":
+                    status = "Em Processamento";
+                    progress = 50;
+                    statusMessageText = "Seu pedido está sendo montado.";
+                    break;
+                case "112233":
+                    status = "Enviado";
+                    progress = 75;
+                    statusMessageText = "Seu pedido foi enviado e está a caminho.";
+                    break;
+                case "445566":
+                    status = "Entregue";
+                    progress = 100;
+                    statusMessageText = "Seu pedido foi entregue com sucesso!";
+                    break;
+                default:
+                    errorMessage.style.display = 'block';
+                    errorMessage.innerText = "Código de rastreio inválido.";
+                    return;
+            }
+
+            // Atualiza a barra de progresso e o status
+            statusContainer.style.display = "block";
+            progressBar.style.width = progress + "%";
+            statusMessage.innerText = statusMessageText;
+        }
+    </script>
+
+</body>
+</html>

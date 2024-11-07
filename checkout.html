@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Montagem de PC Gamer</title>
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: url('https://mir-s3-cdn-cf.behance.net/project_modules/1400/0a262319719863.562f398918607.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            width: 80%;
+            max-width: 900px;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #444;
+        }
+
+        .input-container {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: #fff;
+            background-color: #000000;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #b700ffc5;
+        }
+
+        .payment-method label {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            display: block;
+            cursor: pointer;
+        }
+
+        .payment-method input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .map-container {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        #map {
+            width: 100%;
+            height: 300px;
+        }
+
+        .card-info, .pix-info {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .pix-info img {
+            max-width: 200px;
+        }
+
+        #frete {
+            font-weight: bold;
+            margin-top: 10px;
+            color: #333;
+        }
+
+        #total-carrinho {
+            font-weight: bold;
+            margin-top: 10px;
+            color: #333;
+        }
+
+        /* Estilos para o pop-up */
+        #popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #popup img {
+            max-width: 90%;
+            max-height: 80%;
+            border-radius: 8px;
+        }
+
+        #popup button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #333;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .header-image {
+            width: 80%; 
+            max-width: 600px;
+            max-height: 400px; 
+            object-fit: cover; 
+            margin-top: 0; 
+            margin-bottom: 20px; 
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .coupon-container {
+            margin-top: 20px;
+        }
+
+        #cupom {
+            width: 70%;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+
+        #mensagem-cupom {
+            color: green;
+            margin-top: 10px;
+        }
+    </style>
+    <!-- Carregar o script da API do Google Maps -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgzgT-r9P6g5AHBYDv3ENtlt1KwAHvuuI&callback=initMap&libraries=places" async defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode"></script>
+</head>
+<body onload="mostrarPopup()">
+
+    <div id="popup">
+        <img src="https://2newgames.com.br/wp-content/uploads/2023/09/TWITTER-PRIME-NINJA-DAY.jpg" alt="Pop-up de Promoção">
+        <button onclick="fecharPopup()">Fechar</button>
+    </div>
+  <!-- Imagem de rodapé -->
+  <img src="https://www.abcdacomunicacao.com.br/wp-content/uploads/twitter-OFERTA-NINJA-1-.jpg" alt="Imagem de Rodapé" class="header-image">
+    <div class="container">
+        <h1>Finalizar Compra</h1>
+        <!-- Exibindo o valor do carrinho -->
+        <div id="total-carrinho">R$ 0.00</div>
+
+        <!-- Cálculo de Frete -->
+        <div class="shipping">
+            <div class="section-title">Calcule o Frete</div>
+            <div class="input-container">
+                <input type="text" id="cep" placeholder="Digite seu CEP">
+            </div>
+            <button onclick="buscarEndereco()">Encontre seu endereço</button>
+            <div id="frete"></div>
+            <div id="map" class="map-container"></div>
+        </div>
+
+        <!-- Métodos de Pagamento -->
+        <div class="payment-method">
+            <div class="section-title">Método de Pagamento</div>
+            <label><input type="radio" name="pagamento" value="credito" onclick="mostrarFormularioPagamento('credito')"> Cartão de Crédito</label>
+            <label><input type="radio" name="pagamento" value="debito" onclick="mostrarFormularioPagamento('debito')"> Cartão de Débito</label>
+            <label><input type="radio" name="pagamento" value="pix" onclick="mostrarFormularioPagamento('pix')"> Pix</label>
+            
+            <!-- Adicionando o campo de cupom -->
+            <div class="coupon-container">
+                <div class="section-title">Cupom de Desconto</div>
+                <input type="text" id="cupom" placeholder="Digite seu cupom" />
+                <button onclick="ativarCupom()">Ativar Cupom</button>
+                <div id="mensagem-cupom"></div>
+            </div>
+        </div>
+
+        <!-- Informações de pagamento para Cartão de Crédito e Débito -->
+        <div id="cartao-credito" class="card-info">
+            <div class="section-title">Informações do Cartão</div>
+            <div class="input-container">
+                <input type="text" id="numero-cartao" placeholder="Número do Cartão" maxlength="19">
+            </div>
+            <div class="input-container">
+                <input type="text" id="validade" placeholder="Validade (MM/AA)" maxlength="5">
+            </div>
+            <div class="input-container">
+                <input type="text" id="codigo-seguranca" placeholder="Código de Segurança" maxlength="3">
+            </div>
+            <div class="input-container">
+                <input type="text" id="nome-cartao" placeholder="Nome Impresso no Cartão">
+            </div>
+        </div>
+
+        <!-- Informações para Pix -->
+        <div id="pix-info" class="pix-info">
+            <div class="section-title">Pagamento via Pix</div>
+            <div id="qrcode"></div>
+        </div>
+        
+        <button onclick="finalizarCompra()">Confirmar Pagamento</button>
+       <!-- Formulário para Rastreio -->
+       <div class="tracking-container" id="tracking-container" style="display: none;">
+        <div class="section-title">Rastrear Pedido</div>
+        <input type="text" id="numero-rastreio" placeholder="Digite o número de rastreio">
+        <button onclick="rastrearPedido()">Rastrear</button>
+    </div>
+</div>
+
+    </div>
+
+    <script>
+        let map, geocoder, marker;
+        let descontoAtivo = 0; // Inicializa o valor do desconto
+
+        // Função para inicializar o mapa
+        function initMap() {
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: -23.55052, lng: -46.633308 }, // Coordenadas iniciais (São Paulo)
+                zoom: 12,
+            });
+            geocoder = new google.maps.Geocoder();
+            marker = new google.maps.Marker({
+                map: map,
+            });
+        }
+
+        // Função para buscar o endereço com o CEP
+        function buscarEndereco() {
+            const cep = document.getElementById("cep").value;
+            if (cep.length === 8) {
+                fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.erro) {
+                            alert("CEP não encontrado.");
+                        } else {
+                            const endereco = `${data.logradouro}, ${data.bairro}, ${data.localidade} - ${data.uf}`;
+                            const enderecoDisplay = `Endereço: ${endereco}`;
+                            document.getElementById("frete").innerText = enderecoDisplay;
+
+                            // Exibir no mapa o local do endereço
+                            geocoder.geocode({ address: endereco }, function (results, status) {
+                                if (status === "OK") {
+                                    map.setCenter(results[0].geometry.location);
+                                    marker.setPosition(results[0].geometry.location);
+                                    // Chamar função para calcular o frete após encontrar o endereço
+                                    calcularFrete(cep);
+                                } else {
+                                    alert("Endereço não encontrado no mapa.");
+                                }
+                            });
+                        }
+                    })
+                    .catch(() => alert("Erro ao buscar o endereço."));
+            } else {
+                alert("Por favor, insira um CEP válido.");
+            }
+        }
+
+        // Função para calcular o frete com base no CEP
+        function calcularFrete(cep) {
+            // Aqui você pode integrar a API de cálculo de frete (Correios, por exemplo).
+            // Para o exemplo, vamos adicionar um valor fixo de frete para simplificação.
+            const valorFrete = 30.00; // Exemplo de valor fixo do frete.
+            const totalCarrinho = calcularTotalCarrinho();
+
+            // Exibindo o valor do frete
+            const totalComFrete = totalCarrinho + valorFrete;
+            document.getElementById("frete").innerText = `Frete: R$ ${valorFrete.toFixed(2)}`;
+            document.getElementById("total-carrinho").innerText = `Total com frete: R$ ${totalComFrete.toFixed(2)}`;
+        }
+
+        // Função para calcular o total do carrinho (valor fictício para este exemplo)
+        function calcularTotalCarrinho() {
+            return 1500.00; // Valor fixo do carrinho para fins de demonstração
+        }
+
+        // Função para mostrar as opções de pagamento
+        function mostrarFormularioPagamento(tipo) {
+            const cartaoCreditoForm = document.getElementById("cartao-credito");
+            const pixForm = document.getElementById("pix-info");
+
+            if (tipo === "credito" || tipo === "debito") {
+                cartaoCreditoForm.style.display = "block";
+                pixForm.style.display = "none";
+            } else if (tipo === "pix") {
+                cartaoCreditoForm.style.display = "none";
+                pixForm.style.display = "block";
+                gerarQRCodePix(); // Gerar o QR Code para Pix
+            }
+        }
+
+        // Função para gerar o QR Code para pagamento via Pix
+        function gerarQRCodePix() {
+            const pixData = "00020126580014BR.GOV.BCB.PIX0136qrcodepix.com.br/12293968297001"; // Exemplo de chave Pix
+            const qrcodeContainer = document.getElementById("qrcode");
+            qrcodeContainer.innerHTML = ""; // Limpa o conteúdo atual
+            new QRCode(qrcodeContainer, {
+                text: pixData,
+                width: 200,
+                height: 200,
+            });
+        }
+
+        // Função para finalizar a compra (apenas exibição de alerta para o exemplo)
+        function finalizarCompra() {
+            const valorTotal = calcularTotalCarrinho() + 30.00; // Incluindo o frete
+            alert(`Compra finalizada! Total: R$ ${valorTotal.toFixed(2)}`);
+        }
+
+        // Função para ativar o cupom de desconto
+        function ativarCupom() {
+            const cupom = document.getElementById("cupom").value.trim();
+            const mensagemCupom = document.getElementById("mensagem-cupom");
+
+            if (cupom === "PRIMEDAY") {
+                descontoAtivo = 10; // Desconto de 10%
+                mensagemCupom.innerText = "Cupom de desconto aplicado!";
+                atualizarTotalComDesconto();
+            } else {
+                mensagemCupom.innerText = "Cupom inválido.";
+            }
+        }
+
+        // Função para atualizar o total com o desconto
+        function atualizarTotalComDesconto() {
+            const totalCarrinho = calcularTotalCarrinho();
+            const totalComDesconto = totalCarrinho - (totalCarrinho * descontoAtivo / 100);
+            const totalComFrete = totalComDesconto + 30.00; // Incluindo o frete
+
+            document.getElementById("total-carrinho").innerText = `Total com desconto e frete: R$ ${totalComFrete.toFixed(2)}`;
+        }
+
+        // Função para mostrar o pop-up promocional
+        function mostrarPopup() {
+            const popup = document.getElementById("popup");
+            setTimeout(() => {
+                popup.style.display = "flex";
+            }, 2000); // Exibe o pop-up após 2 segundos
+        }
+
+        // Função para fechar o pop-up
+        function fecharPopup() {
+            const popup = document.getElementById("popup");
+            popup.style.display = "none";
+        }
+        function rastrearPedido() {
+            const numeroRastreio = document.getElementById("numero-rastreio").value;
+            if (numeroRastreio) {
+                // Redireciona para a página de rastreio com o número de rastreio na URL
+                window.location.href = `rastreio.html?numeroRastreio=${numeroRastreio}`;
+            } else {
+                alert("Por favor, insira o número de rastreio.");
+            }
+        }
+    </script>
+</body>
+</html>
+

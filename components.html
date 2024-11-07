@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Componentes - Montagem de Computadores Gamers</title>
+    <style>
+        /* Resetando estilos e base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1e1e1e, #4a4a4a);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        header, footer {
+            background-color: #333;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            width: 100%;
+        }
+        .container {
+            width: 80%;
+            max-width: 1200px;
+            margin-top: 40px;
+            background: #2d2d2d;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+        h1, h2 {
+            color: #ffdd57;
+            margin-bottom: 20px;
+            font-size: 32px;
+        }
+        h3 {
+            color: #fff;
+            font-size: 22px;
+        }
+        .produto {
+            display: flex;
+            align-items: center;
+            background: #3a3a3a;
+            border-radius: 10px;
+            margin: 15px 0;
+            padding: 15px;
+            transition: transform 0.3s ease;
+        }
+        .produto:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        .produto img {
+            width: 120px;
+            height: 120px;
+            border-radius: 8px;
+        }
+        .produto div {
+            margin-left: 20px;
+            flex: 1;
+        }
+        .produto button {
+            background-color: #ff6f61;
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .produto button:hover {
+            background-color: #ff4500;
+        }
+        .carrinho {
+            margin-top: 30px;
+            padding: 20px;
+            background: #4a4a4a;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .carrinho button {
+            background-color: #28a745;
+            color: #fff;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .carrinho button:hover {
+            background-color: #218838;
+        }
+        .link-cadastro {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+        }
+        .link-cadastro a {
+            color: #ffdd57;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .link-cadastro a:hover {
+            color: #ff4500;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Cabeçalho -->
+    <header>
+        <h1>Montagem de Computadores Gamers</h1>
+    </header>
+
+    <!-- Conteúdo principal -->
+    <div class="container">
+        <h2>Compre os melhores componentes para seu PC Gamer</h2>
+
+        <!-- Produtos -->
+        <div class="produto">
+            <img src="https://via.placeholder.com/120" alt="Memória RAM Corsair">
+            <div>
+                <h3>Memória RAM Corsair 16GB</h3>
+                <p>R$ 600,00</p>
+            </div>
+            <button onclick="adicionarCarrinho('Memória RAM Corsair 16GB', 600)">Adicionar ao Carrinho</button>
+        </div>
+
+        <div class="produto">
+            <img src="https://via.placeholder.com/120" alt="Gabinete Rise">
+            <div>
+                <h3>Gabinete Rise</h3>
+                <p>R$ 250,00</p>
+            </div>
+            <button onclick="adicionarCarrinho('Gabinete Rise', 250)">Adicionar ao Carrinho</button>
+        </div>
+
+        <div class="produto">
+            <img src="https://via.placeholder.com/120" alt="Fonte XPG 650W">
+            <div>
+                <h3>Fonte XPG 650W</h3>
+                <p>R$ 350,00</p>
+            </div>
+            <button onclick="adicionarCarrinho('Fonte XPG 650W', 350)">Adicionar ao Carrinho</button>
+        </div>
+
+        <div class="produto">
+            <img src="https://via.placeholder.com/120" alt="Placa Mãe ASRock Z490">
+            <div>
+                <h3>Placa Mãe ASRock Z490</h3>
+                <p>R$ 900,00</p>
+            </div>
+            <button onclick="adicionarCarrinho('Placa Mãe ASRock Z490', 900)">Adicionar ao Carrinho</button>
+        </div>
+
+        <div class="produto">
+            <img src="https://via.placeholder.com/120" alt="Processador Intel i9">
+            <div>
+                <h3>Processador Intel i9</h3>
+                <p>R$ 3.500,00</p>
+            </div>
+            <button onclick="adicionarCarrinho('Processador Intel i9', 3500)">Adicionar ao Carrinho</button>
+        </div>
+
+        <div class="produto">
+            <img src="https://via.placeholder.com/120" alt="SSD NVMe Hyper X">
+            <div>
+                <h3>SSD NVMe Hyper X 500GB</h3>
+                <p>R$ 550,00</p>
+            </div>
+            <button onclick="adicionarCarrinho('SSD NVMe Hyper X 500GB', 550)">Adicionar ao Carrinho</button>
+        </div>
+
+        <div class="produto">
+            <img src="https://via.placeholder.com/120" alt="HD Seagate 2TB">
+            <div>
+                <h3>HD Seagate 2TB</h3>
+                <p>R$ 300,00</p>
+            </div>
+            <button onclick="adicionarCarrinho('HD Seagate 2TB', 300)">Adicionar ao Carrinho</button>
+        </div>
+
+        <!-- Carrinho -->
+        <div class="carrinho">
+            <div>
+                <h3>Carrinho:</h3>
+                <p id="totalCarrinho">R$ 0,00</p>
+            </div>
+            <button onclick="finalizarCompra()">Finalizar Compra</button>
+        </div>
+    </div>
+
+    <!-- Rodapé -->
+    <footer>
+        <p>&copy; 2023 Montagem de Computadores Gamers. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        // Carrinho de compras
+        let carrinho = [];
+
+        // Função para adicionar um item ao carrinho
+        function adicionarCarrinho(nome, preco) {
+            carrinho.push({ nome, preco });
+            atualizarCarrinho();
+        }
+
+        // Função para atualizar o carrinho e mostrar o total
+        function atualizarCarrinho() {
+            let total = 0;
+            carrinho.forEach(item => {
+                total += item.preco;
+            });
+
+            // Exibe o valor total do carrinho
+            document.getElementById('totalCarrinho').innerText = `R$ ${total.toFixed(2)}`;
+        }
+
+        // Função para finalizar a compra
+        function finalizarCompra() {
+            if (carrinho.length === 0) {
+                alert("O carrinho está vazio. Adicione itens para continuar.");
+                return;
+            }
+            // Simula o processo de pagamento e redirecionamento
+            alert("Compra finalizada com sucesso! Em breve entraremos em contato.");
+            // Aqui você pode adicionar redirecionamento para uma página de pagamento ou confirmação.
+        }
+    </script>
+
+</body>
+</html>

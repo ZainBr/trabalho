@@ -1,0 +1,195 @@
+/* Resetando margens e padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilos do corpo */
+body {
+    font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f3f3;
+            background-image: url('https://inteligenciasartificial.com.br/wp-content/uploads/2024/08/Os-Desafios-Inesperados-na-Montagem-de-um-PC-Gamer-Uma-Analise-Minuciosa-9298.webp'); /* Adicione o caminho da sua imagem aqui */
+            background-size: cover; /* A imagem irá cobrir toda a tela */
+            background-position: center; /* A imagem ficará centralizada */
+            background-repeat: no-repeat; /* A imagem não será repetida */
+}
+
+/* Estilos do cabeçalho */
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+}
+
+/* Estilos do conteúdo principal */
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Estilos do título principal */
+h1, h2 {
+    color: #333;
+}
+
+/* Estilos dos campos do formulário */
+form input, form button {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+}
+
+/* Estilos do link de login */
+.link-login {
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* Estilos do rodapé */
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+}
+
+/* Estilos para os campos de aceite */
+.aceite {
+    margin: 10px 0;
+}
+
+/* Estilo para o botão */
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+/* Estilo para o botão quando em hover */
+button:hover {
+    background-color: #45a049;
+}
+/* Resetando margens e padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilos gerais do corpo */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+/* Estilos do cabeçalho */
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+}
+
+/* Estilos do conteúdo principal */
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Estilos do título */
+h1, h2 {
+    color: #333;
+}
+
+/* Estilos do formulário */
+form input, form button {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Estilo para o link de cadastro */
+.link-cadastro {
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* Estilos do container de login */
+.login-container {
+    display: block;
+}
+
+/* Estilos dos componentes - inicialmente escondidos */
+.componentes-container {
+    display: none;
+}
+
+/* Estilos dos produtos */
+.produto {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 4px;
+}
+
+.produto img {
+    width: 100px;
+    height: 100px;
+}
+
+.produto button {
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.produto button:hover {
+    background-color: #555;
+}
+
+/* Estilo do carrinho */
+.carrinho {
+    margin-top: 20px;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    display: flex;
+    justify-content: space-between;
+}
+
+.carrinho button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.carrinho button:hover {
+    background-color: #218838;
+}
+
+/* Estilos do rodapé */
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+}
